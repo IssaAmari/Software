@@ -1,0 +1,128 @@
+#include <iostream>
+#include <string>
+#include <random>
+using namespace std;
+
+class BloodApp {
+private:
+    string donorName;
+    string bloodType;
+    int age;
+
+public:
+    BloodApp(string name, string type, int donorAge) {
+        donorName = name;
+        bloodType = type;
+        age = donorAge;
+    }
+
+    void displayDonorInfo() {
+        cout << "Donor Name: " << donorName << endl;
+        cout << "Blood Type: " << bloodType << endl;
+        cout << "Age: " << age << endl;
+    }
+
+    void displayPatientInfo() {
+        cout << "Patient Name: " << donorName << endl;
+        cout << "Blood Type: " << bloodType << endl;
+        cout << "Age: " << age << endl;
+    }
+
+    void AppUse() {
+        cout << "Thank you, " << donorName << ", for using our app :)" << endl;
+    }
+
+    static string getPatientName() {
+        string donorName;
+        cout << "Please enter the patient's name: ";
+        getline(cin, donorName);
+        return donorName;
+    }
+
+    void donateBlood(int units) {
+        cout << "Thank you, " << donorName << ", for donating " << units << " units of blood!" << endl;
+        updateBloodBankInventory(bloodType, units);
+    }
+
+    void updateBloodBankInventory(const string& bloodType, int units) {
+        // Perform the necessary updates to the blood bank's inventory based on the donor's blood type and the donated units
+        cout << "Updating blood bank inventory..." << endl;
+        // Implement the logic to update the blood bank's inventory based on the donor's blood type and the donated units
+    }
+};
+
+void displayBloodBankInfo() {
+    random_device rd;
+    mt19937 gen(rd());
+    int minRange = 1;
+    int maxRange = 100;
+    uniform_int_distribution<> dis(minRange, maxRange);
+    int bloodAvailability[7];
+    for (int i = 0; i < 7; ++i) {
+        bloodAvailability[i] = dis(gen);
+    }
+
+    cout << "Blood Availability in Blood Bank:" << endl;
+    cout << "Blood A+: " << bloodAvailability[0] << " units" << endl;
+    cout << "Blood B+: " << bloodAvailability[1] << " units" << endl;
+    cout << "Blood A-: " << bloodAvailability[2] << " units" << endl;
+    cout << "Blood B-: " << bloodAvailability[3] << " units" << endl;
+    cout << "Blood O-: " << bloodAvailability[4] << " units" << endl;
+    cout << "Blood AB+: " << bloodAvailability[5] << " units" << endl;
+    cout << "Blood AB-: " << bloodAvailability[6] << " units" << endl;
+}
+
+int main() {
+    string name, type;
+    int age;
+    int choice;
+
+    while (true) {
+        cout << "Welcome to the BloodFinderApp!" << endl;
+        cout << "1. Donor" << endl;
+        cout << "2. Patient" << endl;
+        cout << "3. Blood Bank" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Choice: ";
+        cin >> choice;
+        cin.ignore();
+        if (choice == 1) {
+            cout << "Please enter your name: ";
+            getline(cin, name);
+            cout << "Please enter your blood type: ";
+            getline(cin, type);
+            cout << "Please enter your age: ";
+            cin >> age;
+            int units;
+            cout << "Please enter the number of blood units you want to donate: ";
+            cin >> units;
+            BloodApp bloodApp(name, type, age);
+            cout << endl << "Donor Information:" << endl;
+            bloodApp.displayDonorInfo();
+            cout << endl;
+            cin.ignore();
+            bloodApp.donateBlood(units);
+            break;
+        } else if (choice == 2) {
+            cout << "Please enter your name: ";
+            getline(cin, name);
+            cout << "Please enter your blood type: ";
+            getline(cin, type);
+            cout << "Please enter your age: ";
+            cin >> age;
+            cin.ignore();
+            BloodApp bloodApp(name, type, age);
+            cout << endl << "Patient Information:" << endl;
+            bloodApp.displayPatientInfo();
+            bloodApp.AppUse();
+        } else if (choice == 3) {
+            displayBloodBankInfo();
+        } else if (choice == 4) {
+            cout << "Thank you for using the BloodFinderApp. Goodbye!" << endl;
+            break;
+        } else {
+            cout << "Invalid choice! Please choose again." << endl;
+        }
+    }
+    return 0;
+}
